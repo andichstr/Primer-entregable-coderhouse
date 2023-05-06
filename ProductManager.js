@@ -1,6 +1,7 @@
 class ProductManager {
     constructor () {
         this.products = [];
+        this.lastId = -1;
     }
     isCodeRepeated(code){
         let isRepeated = false
@@ -9,18 +10,18 @@ class ProductManager {
         });
         return isRepeated;
     }
-    getLastId() {
-        if(this.products.length!=0) return this.products[this.products.length-1].id;
-        else return -1;
+    insertId() {
+        this.lastId++;
+        return this.lastId;
     }
     addProduct(product) {
-        const isRepeated = this.isCodeRepeated(product.code);
-        if (!isRepeated) {
-            const id = this.getLastId() + 1;
-            product.id = id;
-            this.products.push(product);
-        }
-        else console.log(`Product with code ${product.code} already in array`);
+        if (!!product){
+            const isRepeated = this.isCodeRepeated(product.code);
+            if (!isRepeated) {
+                product.id = this.insertId();
+                this.products.push(product);
+            } else throw new Error(`Product with code ${product.code} already in array`);
+        } else throw new Error(`Product can't be null or undefined`);
     }
     getProducts() {
         return this.products;
@@ -34,7 +35,7 @@ class ProductManager {
             }
         }
         if(!!foundProduct) return foundProduct;
-        else console.log(`Product with id: ${id} not found.`);
+        else throw new Error(`Product with id: ${id} not found.`);
     }
 }
 

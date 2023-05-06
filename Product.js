@@ -1,12 +1,14 @@
 class Product{
     constructor(title, description, price, thumbnail, code, stock) {
-        this.id = null;
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.thumbnail = thumbnail;
-        this.code = code;
-        this.stock = stock;
+        if(!!title && !!description && !!price && !!thumbnail && !!code && !!stock) {
+            this.id = null;
+            this.title = title;
+            this.description = description;
+            this.price = price;
+            this.thumbnail = thumbnail;
+            this.code = code;
+            this.stock = stock;
+        } else throw new Error("All properties must be set");
     }
 
     getId() {
